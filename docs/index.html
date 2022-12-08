@@ -10,6 +10,9 @@
     <title>2021 公民投票村里地圖</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/slider.css" type="text/css">
+
     <link rel="stylesheet" href="css/ol.css" type="text/css">
     <link rel="stylesheet" href="css/ol3-sidebar.min.css" type="text/css" />
     <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -128,10 +131,18 @@
     <div style="position: fixed; bottom: 0px; left: 0px;">
         <a href="https://facebook.com/k.olc.tw/" target="_blank" class="btn btn-lg alert-primary">北中西區台南市議員參選人江明宗 製作</a>
     </div>
+
+    <!-- 新增 -->
+    <div class="slider">
+        <input type="range" min="85" max="115" value="100" oninput="rangeValue.innerText = this.value / 200" id="pivot">
+        <p id="rangeValue">0.5</p>
+    </div>
+
     <script src="js/jquery.min.js" type="text/javascript"></script>
     <script src="js/ol.js" type="text/javascript"></script>
     <script src="js/ol5-sidebar.min.js" type="text/javascript"></script>
     <script src="js/main.js" type="text/javascript"></script>
+
 </body>
 
 </html>
