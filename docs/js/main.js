@@ -17,8 +17,10 @@ var content = document.getElementById('sidebarContent');
 var cityMeta = {};
 
 var appView = new ol.View({
-  center: ol.proj.fromLonLat([120.221507, 23.000694]),
-  zoom: 14
+  //center: ol.proj.fromLonLat([120.221507, 23.000694]),
+  center: ol.proj.fromLonLat([121.53667, 25.04005]),
+  //zoom: 14
+  zoom: 12
 });
 
 var attribution = new ol.control.Attribution({
@@ -101,7 +103,8 @@ map.on('singleclick', function (evt) {
   });
 });
 
-var colorMode = 'full';
+//var colorMode = 'full';
+var colorMode = '18';
 $('a.btn-mode').click(function (e) {
   e.preventDefault();
   colorMode = $(this).attr('data-mode');
@@ -114,18 +117,36 @@ $('a.btn-mode').click(function (e) {
   });
   cunli.getSource().refresh();
 });
-var cunliBorder = false;
+//var cunliBorder = false;
+var cunliBorder = true;
 $('a#btn-cunli').click(function (e) {
   e.preventDefault();
   cunliBorder = !cunliBorder;
   cunli.getSource().refresh();
 });
+
+//新增
+var pivot = 0.5;
+$("#pivot").on("change",function(){
+    pivot = $(this).val() / 200;
+    cunli.getSource().refresh();
+});
+
+function eee(p) {
+  return vote[p.VILLCODE]['18_agree'] + vote[p.VILLCODE]['18_disagree'];
+}
+
 function cunliStyle(f) {
   var p = f.getProperties();
   var color = 'rgba(255,255,255,0.3)';
   var strokeWidth = 0;
   var strokeColor = 'rgba(0,0,0,0.3)';
   var cunliStroke = null;
+
+  //let eee = vote[p.VILLCODE]['18_agree'] + vote[p.VILLCODE]['18_disagree'];
+
+  //let pivot = 0.5;
+  
   if (cunliBorder) {
     strokeColor = 'rgba(0,0,0,1)';
     strokeWidth = 1;
@@ -165,11 +186,38 @@ function cunliStyle(f) {
           color = 'rgba(27,148,49,0.3)'; //green
         }
         break;
-      case '18':
-        if (vote[p.VILLCODE]['18_agree'] > vote[p.VILLCODE]['18_disagree']) {
-          color = 'rgba(0,0,255,0.3)'; //blue
+      /*case '18':
+        if (vote[p.VILLCODE]['18_agree'] / eee(p) > pivot + 0.1) {
+          color = 'rgba(0,0,128,0.7)'; //blue
+        } else if (vote[p.VILLCODE]['18_agree'] / eee(p) > pivot + 0.05) {
+          color = 'rgba(0,0,255,0.7)'; //blue
+        } else if (vote[p.VILLCODE]['18_agree'] / eee(p) > pivot + 0.02) {
+          color = 'rgba(128,128,255,0.7)'; //blue
+        } else if (vote[p.VILLCODE]['18_agree'] / eee(p) > pivot - 0.02) {
+          color = 'rgba(128,128,128,0.7)'; //gray
+        } else if (vote[p.VILLCODE]['18_agree'] / eee(p) > pivot - 0.05) {
+          color = 'rgba(128,255,128,0.7)'; //green
+        } else if (vote[p.VILLCODE]['18_agree'] / eee(p) > pivot - 0.1) {
+          color = 'rgba(0,255,0,0.7)'; //green
         } else {
-          color = 'rgba(27,148,49,0.3)'; //green
+          color = 'rgba(0,128,0,0.7)'; //green
+        }
+        break;*/
+      case '18':
+        if (vote[p.VILLCODE]['18_agree'] / eee(p) > pivot - (-0.1)) {
+          color = 'rgba(0,20,64,0.5)'; //blue
+        } else if (vote[p.VILLCODE]['18_agree'] / eee(p) > pivot - (-0.05)) {
+          color = 'rgba(0,39,122,0.5)'; //blue
+        } else if (vote[p.VILLCODE]['18_agree'] / eee(p) > pivot - (-0.02)) {
+          color = 'rgba(13,112,255,0.5)'; //blue
+        } else if (vote[p.VILLCODE]['18_agree'] / eee(p) > pivot - 0.02) {
+          color = 'rgba(128,128,128,0.5)'; //gray
+        } else if (vote[p.VILLCODE]['18_agree'] / eee(p) > pivot - 0.05) {
+          color = 'rgba(0,189,13,0.5)'; //green
+        } else if (vote[p.VILLCODE]['18_agree'] / eee(p) > pivot - 0.1) {
+          color = 'rgba(0,87,6,0.5)'; //green
+        } else {
+          color = 'rgba(0,41,3,0.5)'; //green
         }
         break;
       case '19':
